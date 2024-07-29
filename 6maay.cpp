@@ -19,7 +19,7 @@ double func(double a,double b){
         f3 = f(c);
 
     }while(f3>e);
-    cout<<"root: "<<c<<endl;
+    cout<<" root: "<<c<<endl;
 }
 
 
