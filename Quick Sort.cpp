@@ -1,80 +1,55 @@
-// Quick sort in C++
-
 #include<iostream>
 using namespace std;
 
-// function to swap elements
-void swap(int *a, int *b) {
-  int t = *a;
-  *a = *b;
-  *b = t;
+void print(int arr[],int n){
+    for(int i=0;i<n;i++)
+        cout<<arr[i]<<" ";
 }
 
-// function to print the array
-void printArray(int array[], int size) {
-  int i;
-  for (i = 0; i < size; i++)
-    cout << array[i] << " ";
-  cout << endl;
+void swap(int *p,int *q){
+    int temp = *p;
+        *p = *q;
+        *q = temp;
 }
 
-// function to rearrange array (find the partition point)
-int partition(int array[], int low, int high) {
+int partition(int arr[],int l,int h){
+    int pivot=arr[l];
+    int i=l,j=h;
 
-  // select the rightmost element as pivot
-  int pivot = array[high];
-
-  // pointer for greater element
-  int i = (low - 1);
-
-  // traverse each element of the array
-  // compare them with the pivot
-  for (int j = low; j < high; j++) {
-    if (array[j] <= pivot) {
-
-      // if element smaller than pivot is found
-      // swap it with the greater element pointed by i
-      i++;
-
-      // swap element at i with element at j
-      swap(&array[i], &array[j]);
+    while(i<j){
+        while(arr[i]<=pivot){
+            i++;
+        }
+        while(arr[j]>pivot){
+            j--;
+        }
+        if(i<j)
+        {
+            swap(&arr[i],&arr[j]);
+        }
     }
-  }
+    swap(&arr[l],&arr[j]);
 
-  // swap pivot with the greater element at i
-  swap(&array[i + 1], &array[high]);
-
-  // return the partition point
-  return (i + 1);
+    return j;
 }
 
-void quickSort(int array[], int low, int high) {
-  if (low < high) {
 
-    // find the pivot element such that
-    // elements smaller than pivot are on left of pivot
-    // elements greater than pivot are on righ of pivot
-    int pi = partition(array, low, high);
-
-    // recursive call on the left of pivot
-    quickSort(array, low, pi - 1);
-
-    // recursive call on the right of pivot
-    quickSort(array, pi + 1, high);
-  }
+void quicksort(int arr[],int l,int h){
+    if(l<h){
+       int j=partition(arr,l,h);
+        quicksort(arr,l,j-1);
+        quicksort(arr,j+1,h);
+    }
 }
 
-// Driver code
-int main() {
-  int data[] = {8, 7, 6, 1, 0, 9, 2};
-  int n = sizeof(data) / sizeof(data[0]);
 
-  cout << "Unsorted Array: \n";
-  printArray(data, n);
+int main(){
+int arr[]={9,4,3,11,15,20,2,24,30,1,35};
+int n=sizeof(arr)/sizeof(arr[0]);
 
-  // perform quicksort on data
-  quickSort(data, 0, n - 1);
+quicksort(arr,0,n-1);
 
-  cout << "Sorted array in ascending order: \n";
-  printArray(data, n);
+print(arr,n);
+
+return 0;
 }
