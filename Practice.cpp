@@ -1,43 +1,33 @@
-#include <bits/stdc++.h>
-using namespace std;
 
-vector<int> counting( vector<int>& inputArray ){
+#include <vector>
+#include <algorithm>
 
-    int N = inputArray.size();
-    int MxV=0;
-    for(int i=0; i<N; i++ )
-        MxV = max( MxV, inputArray[i] );
+class Solution {
+public:
+    // Function to merge overlapping intervals
+    vector<vector<int>> merge(vector <vector<int> >& intervals) {
+        // First, sort the intervals based on the starting times
+       sort(intervals.begin(), intervals.end());
 
-    vector<int> countArray(MxV+1, 0);
+        // This will be the result vector for merged intervals
+        vector< vector<int> > mergedIntervals;
 
-    for(int i=0; i<N; i++ )
-        countArray[ inputArray[i] ]++;
+        // Initialize the result vector with the first interval
+        mergedIntervals.push_back(intervals[0]);
 
-     for(int i=1; i<countArray.size(); i++ )
-        countArray[i] += countArray[i-1];
-
-     vector<int> outputArray(N);
-
-      for(int i=N-1; i>=0; i-- ){
-         outputArray[ --countArray[inputArray[i]] ] = inputArray[i];
-      }
-
-    return outputArray;
-}
-
-int main() {
-
-    vector<int> inputArray ={ 4, 3, 12, 1, 5, 5, 3, 9 };
-
-    vector<int> printArray = counting( inputArray );
-
-    for(int i=0; i<printArray.size(); i++ ){
-        cout<< printArray[i] <<" ";
+        // Iterate through all the intervals starting from the second one
+        for (int i = 1; i < intervals.size(); ++i) {
+            // If the current interval does not overlap with the last interval in the result,
+            // then simply add the current interval to the result
+            if (mergedIntervals.back()[1] < intervals[i][0]) {
+                mergedIntervals.push_back(intervals[i]);
+            } else {
+                // If there is an overlap, merge the current interval with the last interval
+                // in the result by updating the end time to the maximum end time seen
+                mergedIntervals.back()[1] = max(mergedIntervals.back()[1], intervals[i][1]);
+            }
+        }
+        // Return the merged intervals
+        return mergedIntervals;
     }
-
-    return 0;
-}
-
-
-
-
+};
