@@ -24,7 +24,7 @@ public:
             } else {
                 // If there is an overlap, merge the current interval with the last interval
                 // in the result by updating the end time to the maximum end time seen
-                mergedIntervals.back()[1] = max(mergedIntervals.back()[1], intervals[i][1]);
+                mergedIntervals.back()[1] = max( mergedIntervals.back()[1], intervals[i][1]);
             }
         }
         // Return the merged intervals
