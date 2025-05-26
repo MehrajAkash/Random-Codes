@@ -36,6 +36,7 @@ public:
                 mergedIntervals.back()[1] = max( mergedIntervals.back()[1], intervals[i][1]);
             }
         }
+        
         return mergedIntervals;
     }
 
